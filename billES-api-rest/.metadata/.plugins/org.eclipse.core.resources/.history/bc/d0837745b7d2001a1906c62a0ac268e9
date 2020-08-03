@@ -1,0 +1,11 @@
+package com.ecommes.app.service;
+
+import java.util.List;
+
+import com.ecommes.app.entity.Producto;
+
+public interface IProductoService {
+	
+	List<Producto> findAll();
+
+}

@@ -1,0 +1,5 @@
+package com.ecommes.app.entity;
+
+public class Productos {
+
+}

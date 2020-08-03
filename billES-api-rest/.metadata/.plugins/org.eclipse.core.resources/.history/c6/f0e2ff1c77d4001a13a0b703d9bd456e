@@ -1,0 +1,14 @@
+package com.ecommes.app.controller;
+
+import java.util.List;
+
+import com.ecommes.app.entity.Categoria;
+
+public class CategoriaController {
+	
+	public List<Categoria> list(){
+		
+		return null;
+	}
+
+}

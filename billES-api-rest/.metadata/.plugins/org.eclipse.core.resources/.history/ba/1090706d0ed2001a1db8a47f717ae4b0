@@ -1,0 +1,14 @@
+package com.ecommes.app.controller;
+
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class ProductoController {
+	
+	
+	public String Productos() {
+		
+		return null;
+	}
+
+}

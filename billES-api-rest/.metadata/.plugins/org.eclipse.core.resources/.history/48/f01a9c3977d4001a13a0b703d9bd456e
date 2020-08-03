@@ -1,0 +1,17 @@
+package com.ecommes.app.controller;
+
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.ecommes.app.entity.Categoria;
+
+public class CategoriaController {
+	
+	@GetMapping("/categorias")
+	public List<Categoria> list(){
+		
+		return null;
+	}
+
+}

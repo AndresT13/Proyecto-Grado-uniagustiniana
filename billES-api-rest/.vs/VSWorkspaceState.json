@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\main",
+    "\\src\\main\\java",
+    "\\src\\main\\java\\com",
+    "\\src\\main\\java\\com\\init",
+    "\\src\\main\\java\\com\\init\\app",
+    "\\src\\main\\java\\com\\init\\app\\models",
+    "\\src\\main\\java\\com\\init\\app\\models\\entity"
+  ],
+  "SelectedNode": "\\src\\main\\java\\com\\init\\app\\models\\entity\\Revision.java",
+  "PreviewInSolutionExplorer": false
+}

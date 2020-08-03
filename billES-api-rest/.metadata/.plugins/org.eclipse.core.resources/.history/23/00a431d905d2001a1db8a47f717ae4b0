@@ -1,0 +1,37 @@
+package com.ecommes.app.entity;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
+@Table(name="marcas")
+public class marca implements Serializable {
+
+	private Long id;
+	private String nombre;
+	
+	private boolean visible;
+	private int codigo;
+	
+	@Temporal(TemporalType.DATE)
+	private Date createAt;
+	
+	@PrePersist
+	public void prePersist() {
+		createAt = new Date();
+	}
+	
+	
+	
+	
+	
+	
+	private static final long serialVersionUID = 1L;
+
+}

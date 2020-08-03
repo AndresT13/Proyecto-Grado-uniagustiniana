@@ -1,0 +1,7 @@
+package com.ecommes.app.service;
+
+import com.ecommes.app.dao.IProductoDao;
+
+public class ProductoServiceImpl implements IProductoService {
+
+}

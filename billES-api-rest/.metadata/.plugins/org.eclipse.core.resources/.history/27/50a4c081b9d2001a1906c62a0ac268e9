@@ -1,0 +1,15 @@
+package com.ecommes.app.dao;
+
+import java.util.Optional;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.ecommes.app.entity.Producto;
+
+public interface IProductoDao extends CrudRepository<Producto, Long> {
+	//Obtener un producto
+	//Optional<Producto> findByNombreProducto(String np);
+	//comprobar si existe uno con un nombre determinado
+	//boolean existsByNombreProducto(String np);
+
+}

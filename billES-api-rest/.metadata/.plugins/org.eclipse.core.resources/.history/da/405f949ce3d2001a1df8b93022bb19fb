@@ -1,0 +1,5 @@
+package com.ecommes.app.service;
+
+public interface IRevisionService {
+
+}
