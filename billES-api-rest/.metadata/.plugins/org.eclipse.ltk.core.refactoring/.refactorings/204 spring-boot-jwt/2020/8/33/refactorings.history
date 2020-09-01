@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;SpringSecurityConfig.java&apos; to &apos;ecommES/src/main/java/com.ecommes.app.classes&apos;&#x0D;&#x0A;- Original project: &apos;204 spring-boot-jwt&apos;&#x0D;&#x0A;- Destination element: &apos;ecommES/src/main/java/com.ecommes.app.classes&apos;&#x0D;&#x0A;- Original element: &apos;SpringSecurityConfig.java&apos;" description="Copy file" destination="=ecommES/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.ecommes.app.classes" element1="spring-boot-jwt/src/main/java/com/bolsadeideas/springboot/app/SpringSecurityConfig.java" files="1" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1597454009533" units="0" version="1.0"/>
+</session>

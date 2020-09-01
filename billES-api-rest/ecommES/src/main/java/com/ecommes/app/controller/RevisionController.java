@@ -1,8 +1,14 @@
 package com.ecommes.app.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,14 +22,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ecommes.app.entity.Revision;
 import com.ecommes.app.service.IRevisionService;
 
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping("/api")
 public class RevisionController {
 	
-	
+	@Autowired
 	private IRevisionService revisionService;
 	
-	
+	// método para listar
 	@GetMapping("/revisiones")
 	public List<Revision> revision() {
 		return revisionService.findAll();
@@ -31,43 +38,103 @@ public class RevisionController {
 			
 	// mostrar datos
 	@GetMapping("/revisiones/{id}")
-	public Revision Mostrar(@PathVariable Long id) {
-		return revisionService.findById(id);
+	public ResponseEntity<?> Mostrar(@PathVariable Long id) {
+		
+		Revision revision = null;		
+		Map<String, Object> response = new HashMap<>();
+		
+		try {
+			revision = revisionService.findById(id);
+			
+		} catch (DataAccessException e) {
+			response.put("mensaje", "al consultar en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		if(revision == null) {
+			response.put("mensaje", "La revisión ID: ".concat(id.toString().concat(", no existe en la base de datos!")));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<Revision>(revision, HttpStatus.OK);
 	}
 	
 	
 	// metodo para crear
 	@PostMapping("/revisiones")
-	@ResponseStatus(HttpStatus.CREATED)
-	public Revision create(@RequestBody Revision revision) {	
-		//cliente.setCreateAt(new Date());
-		return revisionService.save(revision);
+	public ResponseEntity<?> create(@RequestBody Revision revision) {	
+		
+		Revision revisionNew = null;
+		Map<String, Object> response = new HashMap<>();
+		
+		try {
+			revisionNew = revisionService.save(revision);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar el insert en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);			
+		}
+		response.put("mensaje", "La revisión ha sido creado con éxito!");
+		response.put("cliente", revisionNew);
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED); 
 	}
 		
 	//método para update o modificar o actualizar
 	@PutMapping("/revisiones/{id}")
-	@ResponseStatus(HttpStatus.CREATED)
-	public Revision update(@RequestBody Revision revision, @PathVariable Long id) {
+	public ResponseEntity<?> update(@RequestBody Revision revision, @PathVariable Long id) {
 		
 		Revision revisionActual = revisionService.findById(id);
+		Revision revisionUpdated = null;
+		Map<String, Object> response = new HashMap<>();
 		
+		if(revisionActual == null) {
+			response.put("mensaje", "Error: no se pudo editar, revisión ID: ".concat(id.toString().concat(", no existe en la base de datos!")));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
 		
-		revisionActual.setNombre(revision.getNombre());
-		revisionActual.setCorreo(revision.getCorreo());
-		revisionActual.setComentario(revision.getComentario());
-		revisionActual.setEstrellas(revision.getEstrellas());
+		try {
+			revisionActual.setNombre(revision.getNombre());
+			revisionActual.setCorreo(revision.getCorreo());
+			revisionActual.setComentario(revision.getComentario());
+			revisionActual.setEstrellas(revision.getEstrellas());
+			revisionActual.setCreateAt(revision.getCreateAt());
+			
+			revisionUpdated = revisionService.save(revisionActual);
+			
+			
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar el insert en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			
+			
+			//con un service voy a persistir el objeto actual internamente va a hacer un merge que va ha actualizar los datos y se traduce a un update en la base de datos
+			
+		}	
 		
+		response.put("mensaje", "La revisión ha sido actualizado con éxito!");
+		response.put("cliente", revisionUpdated);
 		
-		//con un service voy a persistir el objeto actual internamente va a hacer un merge que va ha actualizar los datos y se traduce a un update en la base de datos
-		return revisionService.save(revisionActual);
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);		
 	}
 	
 	
 	// metodo para delete
 	@DeleteMapping("/revisiones/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@PathVariable Long id) {
-		revisionService.delete(id);
+	public ResponseEntity<?> delete(@PathVariable Long id) {
+		Map<String, Object> response = new HashMap<>();
+		
+		try {
+			
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al eliminar el insert en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		response.put("mensaje", "La revisión ha sido eliminado con éxito." );
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
 	
 

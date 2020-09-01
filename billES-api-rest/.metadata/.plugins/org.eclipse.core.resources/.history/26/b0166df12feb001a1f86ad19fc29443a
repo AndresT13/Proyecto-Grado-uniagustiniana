@@ -1,0 +1,155 @@
+package com.ecommes.app.controller;
+
+
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+
+import com.ecommes.app.entity.Usuario;
+import com.ecommes.app.service.IUsuarioService;
+
+@CrossOrigin(origins = {"http://localhost:4200"})
+@RestController
+@RequestMapping("/api")
+public class UsuarioController {
+	
+	@Autowired
+	private IUsuarioService usuarioService;
+	
+	
+	// método para listar
+	@GetMapping("/usuarios")
+	public List<Usuario> usuario() {	
+		return usuarioService.findAll();
+	}
+		
+	// mostrar datos
+	@GetMapping("/usuarios/{id}")
+	public ResponseEntity<?> Mostrar(@PathVariable Long id) {
+		
+		Usuario usuario = null;
+		Map<String, Object> response = new HashMap<>();
+		
+				
+		try {
+			usuario = usuarioService.findById(id);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "al consultar en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);			
+		}
+		
+		if(usuario == null) {
+			response.put("mensaje", "El usuario ID: ".concat(id.toString().concat(", no existe en la base de datos!")));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+			
+		}
+			return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
+		
+	}
+	
+	
+	// metodo para crear
+	@PostMapping(value = "/usuarios")
+	public ResponseEntity<?> create(@Valid @RequestBody Usuario usuario, BindingResult result) {	
+		//cliente.setCreateAt(new Date());
+		Usuario usuarioNew = null;
+		Map<String, Object> response = new HashMap<>();
+		
+		if(result.hasErrors()) {
+			List<String> errors = new ArrayList<>();
+			response.put("errors", errors);
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+		}
+		
+		try {
+			usuarioNew = usuarioService.save(usuario);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar el insert en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		response.put("mensaje", "El usuario ha sido creado con éxito!");
+		response.put("cliente", usuarioNew);
+		
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+		
+		
+	}
+		
+	//método para update o modificar o actualizar
+	@PutMapping("/usuarios/{id}")
+	public ResponseEntity<?> update(@RequestBody Usuario usuario, @PathVariable Long id) {
+		Usuario usuarioActual = usuarioService.findById(id);
+		Usuario usuarioUpdated = null;
+		Map<String, Object> response = new HashMap<>();
+		
+		if(usuarioActual == null) {
+			response.put("mensaje", "Error: no se pudo editar, producto ID: ".concat(id.toString().concat(", no existe en la base de datos!")));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		
+		try {
+			usuarioActual.setNombre(usuario.getNombre());
+			usuarioActual.setNombreUsuario(usuario.getNombreUsuario());
+			usuarioActual.setTipo(usuario.getTipo());
+			usuarioActual.setEmail(usuario.getEmail());
+			usuarioActual.setTipo(usuario.getTipo());			
+			usuarioActual.setCreateAt(usuario.getCreateAt());
+			
+			usuarioUpdated =  usuarioService.save(usuarioActual);
+			
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar el insert en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);			
+		}
+		
+		response.put("mensaje", "El usuario ha sido actualizado con éxito!");
+		response.put("cliente", usuarioUpdated);
+		
+				
+		
+		
+		//con un service voy a persistir el objeto actual internamente va a hacer un merge que va ha actualizar los datos y se traduce a un update en la base de datos
+		return new ResponseEntity<Map<String, Object>>(response,HttpStatus.CREATED);
+	}
+	
+	
+	// metodo para delete
+	@DeleteMapping("/usuarios/{id}")
+	public ResponseEntity<?> delete(@PathVariable Long id) {
+		Map<String, Object> response = new HashMap<>();
+		try {
+			usuarioService.delete(id);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al eliminar el insert en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		response.put("mensaje", "El usuario ha sido eliminado con éxito." );
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+	}
+
+}

@@ -2,6 +2,7 @@ package com.ecommes.app.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -33,19 +34,17 @@ public class Revision implements Serializable {
 	
 	private int estrellas;
 	
-	
 	@Column(name = "create_at")
 	@Temporal(TemporalType.DATE)
-	private Date createAt;
+	private Date createAt;	
+	
+	@OneToMany
+	@JoinColumn(name = "codigo_producto")
+	private List<Producto> producto;
 	
 	
-	@ManyToOne
-	@JoinColumn(name = "codigo_produto")
-	Producto producto;
 	
-	
-
-	
+		
 		
 	@PrePersist
 	public void prePersist() {
@@ -58,6 +57,18 @@ public class Revision implements Serializable {
 	}
 	
 	
+	
+	
+	public List<Producto> getProducto() {
+		return producto;
+	}
+
+
+	public void setProducto(List<Producto> producto) {
+		this.producto = producto;
+	}
+
+
 	public Long getId() {
 		return id;
 	}
@@ -107,6 +118,7 @@ public class Revision implements Serializable {
 		this.estrellas = estrellas;
 	}
 
+	/*
 
 	public Producto getProducto() {
 		return producto;
@@ -116,7 +128,7 @@ public class Revision implements Serializable {
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
-
+*/
 
 	public Date getCreateAt() {
 		return createAt;
