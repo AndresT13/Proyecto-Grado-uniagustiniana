@@ -1,0 +1,48 @@
+<h1 class="mb-4 mt-4">Administración de Usuarios</h1>
+
+<div class="container row">
+
+  <div class="container row">
+    <div class="col col-sm-4 col-md-6">
+      <button type="button" class="btn btn-warning btn-lg btn-block mb-3 font-weight-bold text-white" [routerLink] = "['/users/form']">Agregar usuario</button>
+    </div>
+  </div>
+  <div class="container row">
+
+    <div   class=" col col-sm-3 col-md-12 ">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Nombre Usuario</th>
+            <th>Email</th>
+            <th>Clave</th>
+            <th>Tipo</th>
+            <!-- <th>Detalle</th> -->
+            <th>Editar</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let usuarios of usuarios" >
+            <td>{{usuarios.id}}</td>
+            <td>{{usuarios.nombre}}</td>
+            <td>{{usuarios.nombreUsuario}}</td>
+            <td>{{usuarios.email}}</td>
+             <td>{{usuarios.clave}}</td>
+            <td>{{usuarios.tipo}}</td>
+                        <!-- <td><button type="button" class="btn btn-dark btn-lg btn-block">Ver Detalles</button></td> -->
+            <td><button type="button" name="editar" class="btn btn-dark btn-lg btn-block" [routerLink] = "['/users/form', usuarios.id ]" >Editar</button></td>
+            <td><button type="button" name="eliminar" class="btn btn-danger btn-lg btn-block" (click)="delete(usuarios)">Eliminar</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+ <!--  <div  class="col-md-6">
+    <app-add-user *ngIf=" accion === 'add' "  [usuario]="usuarioSeleccionado"></app-add-user>
+  </div>
+ -->
+</div>
+

@@ -1,0 +1,58 @@
+<h1> {{titulo}} </h1>
+
+
+<div class="card bg-dark text-white">
+<div class="card ">
+  <div class="card-header text-dark">
+
+    <div class="card-body ">
+      <h5 class="card-title bg-dark text-white text-center">{{ titulo2 }}</h5>
+
+      <p class="card-text bg-dark text-white text-center">Formulario para la creación de Categorías </p>
+    </div>
+
+
+
+ <form>
+
+  <div class="form-group row">
+    <label for="nombre" class="sr-only sr-only-focusable">Nombre Categoría</label>
+     <div class="col col-sm-2 col-md-6">
+       <input type="text"  name="nombre" class="form-control text-dark" placeholder="Nombre Categoría:" required
+       [(ngModel)]="categoria.nombre">
+      </div>
+  </div>
+
+
+  <div class="form-group row">
+    <label for="visible" class="sr-only sr-only-focusable">Visible</label>
+     <div class="col col-sm-2 col-md-6">
+       <input type="text"  name="visible" class="form-control text-dark" placeholder="Visible:" required
+       [(ngModel)]="categoria.visible">
+      </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="categoriaSuperior" class="sr-only sr-only-focusable">Categoria Superior</label>
+     <div class="col col-sm-2 col-md-6 ">
+       <input type="number" name="categoriaSuperior" class="form-control text-dark" placeholder="Categoria Superior:" required
+       [(ngModel)]="categoria.categoriaSuperior">
+      </div>
+  </div>
+
+
+
+  <br/>
+   <div class="form-group row">
+     <button type="button"  class="btn btn-dark btn-lg btn-block" (click)='create()' *ngIf="!categoria.id else elseBlock" role="button">Crear Categoría</button>
+  </div>
+  <ng-template #elseBlock>
+            <button class="btn btn-dark btn-lg btn-block" role="button" (click)='update()'>Actualizar Categoría</button>
+  </ng-template>
+
+</form>
+  </div>
+</div>
+</div>
+
+

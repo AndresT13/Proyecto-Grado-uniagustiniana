@@ -1,0 +1,61 @@
+<h1> {{titulo}} </h1>
+
+
+<div class="card bg-dark text-white">
+<div class="card ">
+  <div class="card-header text-dark">
+
+    <div class="card-body ">
+      <h5 class="card-title bg-dark text-white text-center">{{ titulo2 }}</h5>
+      <p class="card-text bg-dark text-white text-center">Formulario para la creación de Revisiones </p>
+    </div>
+
+
+
+ <form >
+
+  <div class="form-group row">
+    <label for="nombre" class="sr-only sr-only-focusable">Nombre</label>
+     <div class="col col-sm-2 col-md-6">
+       <input type="text"  name="nombre" class="form-control text-dark" placeholder="Nombre:" required
+       [(ngModel)]="revision.nombre">
+      </div>
+
+  </div>
+    <div class="form-group row">
+    <label for="correo" class="sr-only sr-only-focusable">Email</label>
+     <div class="col col-sm-2 col-md-6">
+       <input type="email"  name="correo" class="form-control text-dark" placeholder="Email:" required
+       [(ngModel)]="revision.correo">
+      </div>
+  </div>
+
+   <div class="form-group row">
+    <label for="estrella" class="sr-only sr-only-focusable">Comentario</label>
+     <div class="col col-sm-2 col-md-6">
+       <input type="text"  name="comentario" class="form-control text-dark" placeholder="Comentario:" required
+       [(ngModel)]="revision.comentario">
+      </div>
+  </div>
+
+
+    <div class="form-group row">
+    <label for="estrella" class="sr-only sr-only-focusable">Estrellas</label>
+     <div class="col col-sm-2 col-md-6 ">
+       <input type="number" name="estrella" class="form-control text-dark" placeholder="Estrellas:" required
+       [(ngModel)]="revision.estrella">
+      </div>
+  </div>
+  <br/>
+   <div class="form-group row">
+     <button type="button"  class="btn btn-dark btn-lg btn-block" (click)='create()' *ngIf="!revision.id else elseUpdate" role="button">Crear usuario</button>
+  </div>
+   <ng-template #elseUpdate>
+            <button class="btn btn-dark btn-lg btn-block" role="button" (click)='update()'>Actualizar Usuario</button>
+          </ng-template>
+
+</form>
+  </div>
+</div>
+</div>
+

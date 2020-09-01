@@ -1,0 +1,107 @@
+<h1> {{titulo}} </h1>
+
+
+<div class="card bg-dark text-white">
+<div class="card ">
+  <div class="card-header text-dark">
+
+    <div class="card-body ">
+      <h5 class="card-title bg-dark text-white text-center">{{ titulo2 }}</h5>
+
+      <p class="card-text bg-dark text-white text-center">Formulario para la creación de Productos </p>
+    </div>
+
+
+
+ <form>
+
+  <div class="form-group row">
+    <label for="refProducto" class="sr-only sr-only-focusable">Referencia Producto</label>
+     <div class="col col-sm-2 col-md-6">
+       <input type="text"  name="refProducto" class="form-control text-dark" placeholder="Referencia Producto:" required
+       [(ngModel)]="producto.refProducto">
+      </div>
+  </div>
+
+
+  <div class="form-group row">
+    <label for="nombre" class="sr-only sr-only-focusable">Nombre</label>
+     <div class="col col-sm-2 col-md-6">
+       <input type="text"  name="nombre" class="form-control text-dark" placeholder="Nombre:" required
+       [(ngModel)]="producto.nombre">
+      </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="cantidad" class="sr-only sr-only-focusable">Cantidad</label>
+     <div class="col col-sm-2 col-md-6 ">
+       <input type="number" name="cantidad" class="form-control text-dark" placeholder="Cantidad:" required
+       [(ngModel)]="producto.cantidad">
+      </div>
+  </div>
+
+    <div class="form-group row">
+    <label for="valorneto" class="sr-only sr-only-focusable">Valor neto</label>
+     <div class="cvalornetool col-sm-2 col-md-6 ">
+       <input type="number" name="valorneto" class="form-control text-dark" placeholder="Valor Neto:" required
+       [(ngModel)]="producto.valorneto">
+      </div>
+  </div>
+
+
+
+    <div class="form-group row">
+    <label for="valortotal" class="sr-only sr-only-focusable">Valor Total</label>
+     <div class="col col-sm-2 col-md-6 ">
+       <input type="number" name="valortotal" class="form-control text-dark" placeholder="Valor Total:" required
+       [(ngModel)]="producto.valortotal">
+      </div>
+  </div>
+
+  <!-- arreglar para subir URL de imagen -->
+
+<!--     <div class="form-group row">
+    <label for="img" class="sr-only sr-only-focusable">Imagen</label>
+     <div class="col col-sm-2 col-md-6 ">
+       <input type="file" name="img" class="form-control text-dark" placeholder="Imagen:" required
+       [(ngModel)]="producto.img">
+      </div>
+  </div> -->
+
+
+    <div class="form-group row">
+    <label for="visible" class="sr-only sr-only-focusable">Producto Visible</label>
+     <div class="col col-sm-2 col-md-6">
+       <input type="text"  name="visible" class="form-control text-dark" placeholder="Visible:" required
+       [(ngModel)]="producto.visible">
+      </div>
+  </div>
+      <div class="form-group row">
+    <label for="nuevo" class="sr-only sr-only-focusable">Producto Nuevo</label>
+     <div class="col col-sm-2 col-md-6">
+       <input type="text"  name="nuevo" class="form-control text-dark" placeholder="Nuevo:" required
+       [(ngModel)]="producto.nuevo">
+      </div>
+  </div>
+      <div class="form-group row">
+    <label for="recomendado" class="sr-only sr-only-focusable">Producto Recomendado</label>
+     <div class="col col-sm-2 col-md-6">
+       <input type="text"  name="recomendado" class="form-control text-dark" placeholder="Recomendado:" required
+       [(ngModel)]="producto.recomendado">
+      </div>
+  </div>
+
+  <br/>
+   <div class="form-group row">
+     <button type="button"  class="btn btn-dark btn-lg btn-block" (click)='create()' *ngIf="!producto.id else elseBlock" role="button">Crear Producto</button>
+  </div>
+  <ng-template #elseBlock>
+            <button class="btn btn-dark btn-lg btn-block" role="button" (click)='update()'>Actualizar Producto</button>
+  </ng-template>
+
+</form>
+  </div>
+</div>
+</div>
+
+

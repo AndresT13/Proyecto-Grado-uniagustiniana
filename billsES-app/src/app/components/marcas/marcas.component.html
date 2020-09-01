@@ -1,0 +1,43 @@
+<h1 class="mb-4 mt-4">Administración de Marcas</h1>
+
+<div class="container row">
+
+  <div class="container row">
+    <div class="col col-sm-4 col-md-6">
+      <button type="button" class="btn btn-warning btn-lg btn-block mb-3 font-weight-bold text-white" [routerLink] = "['/brands/form']">Agregar Marca</button>
+    </div>
+  </div>
+  <div class="container row">
+
+    <div   class=" col col-sm-3 col-md-12 ">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre Marca:</th>
+            <!-- <th>Detalle</th> -->
+            <th>Visible</th>
+            <th>Código</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let marca of marcas">
+          <td><strong>{{marca.id}}</strong></td>
+          <td><strong>{{marca.nombre}}</strong></td>
+           <td><strong>{{marca.visible}}</strong></td>
+            <td><strong>{{marca.codigo}}</strong></td>
+            <td><button type="button" name="editar" class="btn btn-dark btn-lg btn-block" [routerLink] = "['/brands/form', marca.id ]" >Editar</button></td>
+            <td><button type="button" name="eliminar" class="btn btn-danger btn-lg btn-block" (click)="delete(marca)">Eliminar</button></td>
+        </tr>
+      </tbody>
+      </table>
+    </div>
+  </div>
+ <!--  <div  class="col-md-6">
+    <app-add-user *ngIf=" accion === 'add' "  [usuario]="usuarioSeleccionado"></app-add-user>
+  </div>
+ -->
+</div>
+
