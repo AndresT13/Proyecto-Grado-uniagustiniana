@@ -1,5 +1,9 @@
 package com.ecommes.app.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +11,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,7 +24,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ecommes.app.entity.Producto;
 import com.ecommes.app.service.IProductoService;
@@ -36,6 +45,12 @@ public class ProductoController {
 	@GetMapping("/productos")
 	public List<Producto> producto() {
 		return productoService.findAll();
+	}
+	
+	@GetMapping("/productos/page/{page}")
+	public Page<Producto> producto(@PathVariable Integer page) {
+		Pageable pageable = PageRequest.of(page, 16);
+		return productoService.findAll(pageable);
 	}
 
 	// mostrar datos
@@ -150,9 +165,39 @@ public class ProductoController {
 		}
 		
 		response.put("mensaje", "El producto ha sido eliminado con éxito." );
+		
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
 	
+	
+	
+	@PostMapping(value="/productos/upload")
+	public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file, @RequestParam("id") Long id) {
+		Map<String, Object> response = new HashMap<>();
+		
+		Producto producto = productoService.findById(id);
+		
+		if(!file.isEmpty()) {
+			String nombreArchivo = file.getOriginalFilename();
+			Path rutaArchivo = Paths.get("uploads").resolve(nombreArchivo).toAbsolutePath();
+			try {
+				Files.copy(file.getInputStream(), rutaArchivo );
+			} catch (IOException e) {
+				response.put("cliente", producto);
+				response.put("mensaje", "Error al subir la imagen en la base de datos " + nombreArchivo);
+				response.put("error", e.getMessage().concat(": ").concat(e.getCause().getMessage()));
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			
+			producto.setFoto(nombreArchivo);			
+			//Actualizar Cliente
+			productoService.save(producto);
+			
+			response.put("cliente", producto);
+			response.put("mensaje", "Has subido correctamente la imagen: " + nombreArchivo);			
+		}		
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+	}
 	
 
 }

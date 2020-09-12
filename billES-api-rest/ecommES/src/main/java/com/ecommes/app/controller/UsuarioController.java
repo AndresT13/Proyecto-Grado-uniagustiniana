@@ -64,8 +64,7 @@ public class UsuarioController {
 	}
 
 	// metodo para crear
-	@PostMapping(value = "/usuarios")
-	// 
+	@PostMapping(value = "/usuarios")	// 
 	public ResponseEntity<?> create(@Valid @RequestBody Usuario usuario, BindingResult result ) {
 		// cliente.setCreateAt(new Date());
 		Usuario usuarioNew = null;
@@ -107,13 +106,10 @@ public class UsuarioController {
 	public ResponseEntity<?> update(@Valid @RequestBody Usuario usuario, BindingResult result, @PathVariable Long id) {
 
 		Usuario usuarioActual = usuarioService.findById(id);
-
 		Usuario usuarioUpdated = null;
-
 		Map<String, Object> response = new HashMap<>();
 
 		if (result.hasErrors()) {
-
 			// Programación funcional
 			List<String> errors = result.getFieldErrors()
 					.stream()

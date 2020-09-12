@@ -6,8 +6,7 @@ import com.ecommes.app.entity.Categoria;
 
 
 public interface ICategoriaService  {
-	List<Categoria> findAll();
-	
+	List<Categoria> findAll();	
 	
 	public Categoria findById(Long id);
 	

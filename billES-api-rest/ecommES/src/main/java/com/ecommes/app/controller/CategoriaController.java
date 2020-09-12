@@ -82,6 +82,9 @@ public class CategoriaController {
 		Categoria categoriaUpdated = null;
 		Map<String, Object> response = new HashMap<>();
 		
+		
+		
+		
 		try {
 			categoriaActual.setNombre(categoria.getNombre());
 			categoriaActual.setCategoriaSuperior(categoria.getCategoriaSuperior());
@@ -104,8 +107,7 @@ public class CategoriaController {
 	
 	@DeleteMapping("/categorias/{id}")
 	@ResponseStatus(value = HttpStatus.NO_CONTENT)
-	public ResponseEntity<?> delete(@PathVariable Long id) {
-		
+	public ResponseEntity<?> delete(@PathVariable Long id) {		
 		Map<String, Object> response = new HashMap<>();
 		
 		try {

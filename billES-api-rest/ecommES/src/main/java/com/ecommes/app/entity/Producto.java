@@ -24,11 +24,9 @@ public class Producto implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-
-
 	@Column(nullable = false)
 	private String nombre;
-	
+
 	@Column(nullable = false, unique = true)
 	private String refproducto;
 
@@ -37,9 +35,6 @@ public class Producto implements Serializable {
 	private double valorneto;
 
 	private double valortotal;
-
-	@Column(name="byte_Foto", length = 1000)
-	private byte[] img;
 
 	private boolean visible;
 
@@ -50,17 +45,17 @@ public class Producto implements Serializable {
 	@Column(name = "create_at")
 	@Temporal(TemporalType.DATE)
 	private Date createAt;
-	
-	
+
+	private String foto;
+
 	@OneToMany
-	@JoinColumn(name ="codigo_marca")
+	@JoinColumn(name = "codigo_marca")
 	private List<Marca> marca;
-	
-	
+
 	@OneToMany
 	@JoinColumn(name = "codigo_categoria")
 	private List<Categoria> categoria;
-	
+
 	@PrePersist
 	public void prePersist() {
 		createAt = new Date();
@@ -70,8 +65,6 @@ public class Producto implements Serializable {
 
 	}
 
-
-
 	/*
 	 * 
 	 * public Usuario getUsuario() { return usuario; }
@@ -80,14 +73,10 @@ public class Producto implements Serializable {
 	 * 
 	 * public void setUsuario(Usuario usuario) { this.usuario = usuario; }
 	 */
-		
-
-
 
 	public Long getId() {
 		return id;
 	}
-
 
 	public void setId(Long id) {
 		this.id = id;
@@ -131,15 +120,6 @@ public class Producto implements Serializable {
 
 	public void setValortotal(double valortotal) {
 		this.valortotal = valortotal;
-	}	
-
-
-	public byte[] getImg() {
-		return img;
-	}
-
-	public void setImg(byte[] img) {
-		this.img = img;
 	}
 
 	public List<Marca> getMarca() {
@@ -189,7 +169,15 @@ public class Producto implements Serializable {
 	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
 	}
-	
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	public static long getSerialversionuid() {
