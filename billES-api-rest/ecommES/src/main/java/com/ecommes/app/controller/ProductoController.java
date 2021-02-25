@@ -96,10 +96,7 @@ public class ProductoController {
 		response.put("cliente", productoNew);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED); 
 		}
-	
-	
-
-	
+		
 
 	// método para update o modificar o actualizar
 	@PutMapping("/productos/{id}")

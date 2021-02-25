@@ -2,14 +2,21 @@ package com.init.app.models.services;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.init.app.models.entity.Producto;
 
 public interface IProductoService {
 	
-	public List<Producto> findAll();
+	List<Producto> findAll();
 	
-	public List<Producto> findById();
+	Page<Producto> findAll(Pageable pageable);		
+		
+	public Producto findById(Long id);
 	
-	public List<Producto> create();
+	public Producto save(Producto producto);
+
+	public void delete(Long id);
 
 }
