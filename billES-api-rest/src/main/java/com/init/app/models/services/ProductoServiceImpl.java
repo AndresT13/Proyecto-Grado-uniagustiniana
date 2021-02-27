@@ -44,7 +44,6 @@ public class ProductoServiceImpl implements IProductoService {
 		return productoDao.save(producto);
 	}
 
-
 	@Override
 	@Transactional
 	public void delete(Long id) {

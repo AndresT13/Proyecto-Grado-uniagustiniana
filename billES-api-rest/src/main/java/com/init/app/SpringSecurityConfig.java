@@ -23,13 +23,13 @@ public class SpringSecurityConfig extends WebSecurityEnablerConfiguration{
 //	}
 	
 	
-	public void configurerGlobal(AuthenticationManagerBuilder builder) throws Exception {
-		passwordEncoder encoder = passwordEncoder();
+//	public void configurerGlobal(AuthenticationManagerBuilder builder) throws Exception {
+	//	passwordEncoder encoder = passwordEncoder();
 		
-		UserBuilder users = User.withDefaultPasswordEncoder();
-	}
+	//	UserBuilder users = User.withDefaultPasswordEncoder();
+//	}
 				
 				
-	}
+//	}
 	
 }
